@@ -1,0 +1,8 @@
+.drop-area {
+    width: 15rem;
+    background: #ececec;
+}
+
+/*.drop-area:-moz-drag-over {*/
+/*  outline: 1px solid red;*/
+/*}*/

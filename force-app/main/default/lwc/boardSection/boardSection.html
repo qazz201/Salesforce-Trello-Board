@@ -1,0 +1,28 @@
+<!-- Board Section -->
+<template>
+    <div data-id={sectionId}
+         class="slds-grid slds-grid_vertical drop-area"
+         ondragover={allowDrop}
+         ondrop={handleDrop}>
+
+        <h2>SECTION ID:{sectionId} </h2>
+
+        <div class="slds-col slds-p-around_small"
+             data-id={itemId}
+             draggable="true"
+             ondragstart={handleDragStart}>
+
+             <h2>ITEM ID:{itemId} </h2>
+            <c-board-item></c-board-item>
+        </div>
+
+<!--        <div class="slds-col slds-p-around_small"-->
+<!--             data-id={getUniqueId}-->
+<!--             draggable="true"-->
+<!--             ondragstart={handleDragStart}>-->
+
+<!--             <h2>ITEM ID:{itemId} </h2>-->
+<!--            <c-board-item></c-board-item>-->
+<!--        </div>-->
+    </div>
+</template>
