@@ -1,34 +1,45 @@
 import {LightningElement, api} from 'lwc';
 
-import {uniqueId, isEmpty} from 'c/commons'
+import {uniqueId, isEmpty, isNotEmpty} from 'c/commons'
 
 export default class BoardSection extends LightningElement {
+    iterate = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-    dropArea;
-    sectionId = uniqueId();
-    itemId = uniqueId();
+    dropAreas;
+
+    // sectionId = uniqueId();
+    // itemId = uniqueId();
+    someUniqueId;
 
     renderedCallback() {
-        this.dropArea = this.template.querySelector('.drop-area');
+        this.dropAreas = this.template.querySelectorAll('.drop-area');
     }
 
-    @api
+
     getItemById(itemId = '') {
         if (isEmpty(itemId)) return;
         return this.template.querySelector(`[data-id="${itemId}"]`);
     }
 
-    @api
+    //
+    // @api
+    // addItem(itemToAdd) {
+    //     this.dropArea.appendChild(itemToAdd);
+    // }
+
     addItem(itemToAdd) {
         this.dropArea.appendChild(itemToAdd);
     }
 
     get getUniqueId() {
-        return uniqueId()
+        this.someUniqueId = uniqueId();
+        return this.someUniqueId;
     }
 
     allowDrop(event) {
+        event.preventDefault();
         const html = event.dataTransfer.types.includes('dragelementid');
+        // console.log('DROP TARGET__', event)
 
         if (html) {
             event.preventDefault();
@@ -40,21 +51,34 @@ export default class BoardSection extends LightningElement {
         event.dataTransfer.setData('dragElementId', event.target.dataset.id);
     }
 
+    // handleDrop(event) {
+    //     console.log('DROP')
+    //     event.preventDefault();
+    //     const dropItemId = event.dataTransfer.getData('dragElementId');
+    //     const dropSectionId = this.dropArea.getAttribute('data-id');
+    //
+    //     let div = document.createElement('div');
+    //     div.innerHTML = `
+    //                     SECTION ID: <b>${dropSectionId}</b> <br/>
+    //                     ITEM ID: <b>${dropItemId}</b>
+    //                     <br/><br/>`;
+    //
+    //     this.template.querySelector('.drop-area').appendChild(div);
+    //
+    //     this.dispatchEvent(new CustomEvent('dropelement', {detail: {dropItemId, dropSectionId}}));
+    //
+    // }
+
     handleDrop(event) {
-        console.log('DROP')
-        event.preventDefault();
-        const dropItemId = event.dataTransfer.getData('dragElementId');
-        const dropSectionId = this.dropArea.getAttribute('data-id');
+        try {
 
-        let div = document.createElement('div');
-        div.innerHTML = `
-                        SECTION ID: <b>${dropSectionId}</b> <br/> 
-                        ITEM ID: <b>${dropItemId}</b> 
-                        <br/><br/>`;
+            event.preventDefault();
+            const dropItemId = event.dataTransfer.getData('dragElementId');
+            const draggedElement = this.template.querySelector(`[data-id="${dropItemId}"]`);
+            event.currentTarget.appendChild(draggedElement);
 
-        this.template.querySelector('.drop-area').appendChild(div);
-
-        this.dispatchEvent(new CustomEvent('dropelement', {detail: {dropItemId, dropSectionId}}));
-
+        } catch (e) {
+            console.error(e)
+        }
     }
 }

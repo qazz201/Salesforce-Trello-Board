@@ -2,6 +2,7 @@
                 implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName">
 
     <div class="">
-        <c:boardContainer ondropelement="{!c.handleElementDrop}"></c:boardContainer>
+        <c:boardSection></c:boardSection>
+<!--        ondropelement="{!c.handleElementDrop}"-->
     </div>
 </aura:component>
