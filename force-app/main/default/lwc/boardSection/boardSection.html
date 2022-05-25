@@ -9,6 +9,7 @@
                 <div data-id={getUniqueId}
                      class="slds-grid slds-grid_vertical drop-area"
                      ondragover={allowDrop}
+                     ondragend={handleDragEnd}
                      ondrop={handleDrop}>
 
                     <h2>SECTION ID:{someUniqueId} </h2>
@@ -18,7 +19,7 @@
                          draggable="true"
                          ondragstart={handleDragStart}>
 
-<!--                        <h2>ITEM ID:{someUniqueId} </h2>-->
+                        <!--                        <h2>ITEM ID:{someUniqueId} </h2>-->
                         <c-board-item item-name={val}></c-board-item>
                     </div>
 
