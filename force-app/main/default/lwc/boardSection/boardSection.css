@@ -1,7 +1,11 @@
 .section-container {
     margin: 0;
     height: calc(100vh - 12.5rem);
+    overflow: auto;
+}
 
+.section-container-column {
+    padding: 0.3rem;
 }
 
 .drop-container {

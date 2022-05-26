@@ -1,10 +1,10 @@
 <!-- Board Section -->
 <template>
 
-    <div class="slds-grid slds-gutters section-container">
+    <div class="slds-grid slds-gutters section-container ">
         <template for:each={iterate} for:item="val">
 
-            <div key={val} class="slds-col">
+            <div key={val} class="slds-col section-container-column">
                 <div data-id={getUniqueId}
                      class="slds-grid slds-grid_vertical drop-container"
                      ondragover={allowDrop}
