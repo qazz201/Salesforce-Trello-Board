@@ -1,16 +1,18 @@
 import {LightningElement, api} from 'lwc';
 
-import {uniqueId, isEmpty, isNotEmpty} from 'c/commons'
+import {uniqueId, isEmpty} from 'c/commons'
 
 const DRAG_ELEMENT_ID = 'dragElementId';
 const CLASS_DRAGGED = 'dragged';
 const HORIZONTAL_SEPARATOR_TAG = 'hr';
 
-
 export default class BoardSection extends LightningElement {
     iterate = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
     dropAreas;
+    currentDraggedElement;
+    currentDropSection;
+    horizontalSeparator = document.createElement(HORIZONTAL_SEPARATOR_TAG);
     someUniqueId;
 
     renderedCallback() {
@@ -28,43 +30,48 @@ export default class BoardSection extends LightningElement {
     }
 
     allowDrop(event) {
-        if (!event.dataTransfer.types.includes(DRAG_ELEMENT_ID.toLowerCase())) return;
-
+        const {currentTarget: dropSection, dataTransfer, clientY} = event;
+        if (!dataTransfer.types.includes(DRAG_ELEMENT_ID.toLowerCase())) return;
         event.preventDefault();
-        this.removeHorizontalSeparatorOnDrag([...this.dropAreas]);
 
-        const itemToInsertBefore = this.getItemToInsertBefore([...event.currentTarget.querySelectorAll('.drag-item')], event.clientY);
-        event.currentTarget.insertBefore(document.createElement(HORIZONTAL_SEPARATOR_TAG), itemToInsertBefore);
+        const itemToInsertBefore = this.getItemToInsertBefore(this.getArrayDragItemsFromDropSection(dropSection), clientY);
+        dropSection.insertBefore(this.horizontalSeparator, itemToInsertBefore);
     }
 
 
     handleDragStart(event) {
-        event.dataTransfer.setData(DRAG_ELEMENT_ID, event.target.dataset.id);
-        event.currentTarget.classList.add(CLASS_DRAGGED);
+        const {currentTarget, dataTransfer} = event;
+
+        dataTransfer.setData(DRAG_ELEMENT_ID, event.target.dataset.id);
+        currentTarget.classList.add(CLASS_DRAGGED);
+        this.currentDraggedElement = currentTarget;
     }
 
     handleDragEnd() {
-        this.removeHorizontalSeparatorOnDrag(this.dropAreas);
-        this.dropAreas.forEach(area => area.querySelector(`.${CLASS_DRAGGED}`)?.classList.remove(CLASS_DRAGGED));
+        this.removeHorizontalSeparatorInDropSection([this.currentDropSection]);
+        this.currentDropSection.querySelector(`.${CLASS_DRAGGED}`)?.classList.remove(CLASS_DRAGGED);
     }
 
     handleDrop(event) {
         event.preventDefault();
+        const {currentTarget: dropSection, dataTransfer} = event;
+        this.currentDropSection = dropSection;
 
-        const dropItemId = event.dataTransfer.getData(DRAG_ELEMENT_ID);
-        const draggedElement = this.getItemById(dropItemId);
+        const dropItemId = dataTransfer.getData(DRAG_ELEMENT_ID);
+        const draggedElement = this.currentDraggedElement || this.getItemById(dropItemId);
 
         if (isEmpty(draggedElement)) return;
-        const itemToInsertBefore = this.getItemToInsertBefore([...event.currentTarget.querySelectorAll('.drag-item')], event.clientY);
+        const itemToInsertBefore = this.getItemToInsertBefore(this.getArrayDragItemsFromDropSection(dropSection), event.clientY);
 
-        if (itemToInsertBefore) {
-            event.currentTarget.insertBefore(draggedElement, itemToInsertBefore);
-        } else {
-            event.currentTarget.appendChild(draggedElement);
-        }
+        dropSection.insertBefore(draggedElement, itemToInsertBefore);
     }
 
-    removeHorizontalSeparatorOnDrag(dropSections = []) {
+    getArrayDragItemsFromDropSection(dropSection) {
+        if (isEmpty(dropSection)) return;
+        return [...dropSection.querySelectorAll('.drag-item')];
+    }
+
+    removeHorizontalSeparatorInDropSection(dropSections = []) {
         dropSections.forEach(section => {
             section.querySelectorAll(HORIZONTAL_SEPARATOR_TAG).forEach(elem => elem.remove());
         });
@@ -77,7 +84,7 @@ export default class BoardSection extends LightningElement {
             const rect = item.getBoundingClientRect();
             const cord = rect.y + rect.height / 2;
 
-            if (cord >= clientY) return item
+            if (!item.classList.contains(CLASS_DRAGGED) && cord >= clientY) return item
         }
 
         return;
