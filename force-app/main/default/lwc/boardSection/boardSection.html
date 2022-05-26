@@ -1,11 +1,10 @@
 <!-- Board Section -->
 <template>
 
-    <div class="slds-grid slds-gutters ">
+    <div class="slds-grid slds-gutters section-container">
         <template for:each={iterate} for:item="val">
 
             <div key={val} class="slds-col">
-
                 <div data-id={getUniqueId}
                      class="slds-grid slds-grid_vertical drop-container"
                      ondragover={allowDrop}
@@ -14,16 +13,15 @@
 
                     <h2>SECTION ID:{someUniqueId} </h2>
 
-                    <div class="slds-col slds-p-around_small drag-item"
+                    <div class="slds-p-around_small drag-item"
                          data-id={getUniqueId}
                          draggable="true"
                          ondragstart={handleDragStart}>
 
-                        <!--                        <h2>ITEM ID:{someUniqueId} </h2>-->
                         <c-board-item item-name={val}></c-board-item>
+
                     </div>
                 </div>
-
             </div>
         </template>
     </div>

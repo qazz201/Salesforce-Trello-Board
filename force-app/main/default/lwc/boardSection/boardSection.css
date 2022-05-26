@@ -1,19 +1,28 @@
+.section-container {
+    margin: 0;
+    height: calc(100vh - 12.5rem);
+
+}
+
 .drop-container {
-    width: 15rem;
-    background: #ececec;
+    width: 18rem;
+    height: 100%;
+    background: #ececec6e;
+    overflow: auto;
 }
 
 .dragged {
     opacity: 0.7;
     transform: rotate(3deg);
 }
+
 /*.dragged {*/
 /*    transition: 0.01s;*/
 /*    transform: translateX(-9999px);*/
 /*}*/
 
 .drag-item {
-    animation: drag-item-animate .3s cubic-bezier(0.32, 1.13, 0.59, 0.81);
+    animation: drag-item-animate .3s cubic-bezier(0.3, 1.15, 0.6, 0.8);
 }
 
 @keyframes drag-item-animate {
