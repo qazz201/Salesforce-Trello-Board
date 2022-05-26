@@ -9,14 +9,14 @@ const HORIZONTAL_SEPARATOR_TAG = 'hr';
 export default class BoardSection extends LightningElement {
     iterate = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-    dropAreas;
+    dropContainers = [];
+    currentDropContainer;
     currentDraggedElement;
-    currentDropSection;
     horizontalSeparator = document.createElement(HORIZONTAL_SEPARATOR_TAG);
     someUniqueId;
 
     renderedCallback() {
-        this.dropAreas = this.template.querySelectorAll('.drop-area');
+        this.dropContainers = [...this.template.querySelectorAll('.drop-container')];
     }
 
     get getUniqueId() {
@@ -30,12 +30,12 @@ export default class BoardSection extends LightningElement {
     }
 
     allowDrop(event) {
-        const {currentTarget: dropSection, dataTransfer, clientY} = event;
+        const {currentTarget: dropContainer, dataTransfer, clientY} = event;
         if (!dataTransfer.types.includes(DRAG_ELEMENT_ID.toLowerCase())) return;
         event.preventDefault();
 
-        const itemToInsertBefore = this.getItemToInsertBefore(this.getArrayDragItemsFromDropSection(dropSection), clientY);
-        dropSection.insertBefore(this.horizontalSeparator, itemToInsertBefore);
+        const itemToInsertBefore = this.getItemToInsertBefore(this.getArrayDragItemsFromDropContainer(dropContainer), clientY);
+        dropContainer.insertBefore(this.horizontalSeparator, itemToInsertBefore);
     }
 
 
@@ -48,31 +48,36 @@ export default class BoardSection extends LightningElement {
     }
 
     handleDragEnd() {
-        this.removeHorizontalSeparatorInDropSection([this.currentDropSection]);
-        this.currentDropSection.querySelector(`.${CLASS_DRAGGED}`)?.classList.remove(CLASS_DRAGGED);
+        this.removeHorizontalSeparatorInDropContainers(this.dropContainers);
+
+        // if (this.currentDropContainer) {
+        //     this.currentDropContainer.querySelector(`.${CLASS_DRAGGED}`)?.classList.remove(CLASS_DRAGGED);
+        // } else {
+            this.dropContainers.forEach((section) => section.querySelector(`.${CLASS_DRAGGED}`)?.classList.remove(CLASS_DRAGGED));
+        // }
     }
 
     handleDrop(event) {
         event.preventDefault();
-        const {currentTarget: dropSection, dataTransfer} = event;
-        this.currentDropSection = dropSection;
+        const {currentTarget: dropContainer, dataTransfer, clientY} = event;
+        this.currentDropContainer = dropContainer;
 
         const dropItemId = dataTransfer.getData(DRAG_ELEMENT_ID);
         const draggedElement = this.currentDraggedElement || this.getItemById(dropItemId);
 
         if (isEmpty(draggedElement)) return;
-        const itemToInsertBefore = this.getItemToInsertBefore(this.getArrayDragItemsFromDropSection(dropSection), event.clientY);
+        const itemToInsertBefore = this.getItemToInsertBefore(this.getArrayDragItemsFromDropContainer(dropContainer), clientY);
 
-        dropSection.insertBefore(draggedElement, itemToInsertBefore);
+        dropContainer.insertBefore(draggedElement, itemToInsertBefore);
     }
 
-    getArrayDragItemsFromDropSection(dropSection) {
-        if (isEmpty(dropSection)) return;
-        return [...dropSection.querySelectorAll('.drag-item')];
+    getArrayDragItemsFromDropContainer(dropContainer) {
+        if (isEmpty(dropContainer)) return;
+        return [...dropContainer.querySelectorAll('.drag-item')];
     }
 
-    removeHorizontalSeparatorInDropSection(dropSections = []) {
-        dropSections.forEach(section => {
+    removeHorizontalSeparatorInDropContainers(dropContainers = []) {
+        dropContainers.forEach(section => {
             section.querySelectorAll(HORIZONTAL_SEPARATOR_TAG).forEach(elem => elem.remove());
         });
     }
@@ -86,7 +91,5 @@ export default class BoardSection extends LightningElement {
 
             if (!item.classList.contains(CLASS_DRAGGED) && cord >= clientY) return item
         }
-
-        return;
     }
 }
