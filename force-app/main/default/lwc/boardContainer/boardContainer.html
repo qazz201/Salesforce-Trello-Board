@@ -1,10 +1,7 @@
 <!-- Board Container -->
 <template>
-    <div class="slds-grid slds-gutters">
-        <template for:each={iterate} for:item="val">
-            <div key={val} class="slds-col">
-                <c-board-section ondropelement={handleDrop}></c-board-section>
-            </div>
-        </template>
-    </div>
+
+    <c-board-section sections={sections}></c-board-section>
+
+
 </template>

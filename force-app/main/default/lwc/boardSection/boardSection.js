@@ -7,7 +7,7 @@ const CLASS_DRAGGED = 'dragged';
 const HORIZONTAL_SEPARATOR_TAG = 'hr';
 
 export default class BoardSection extends LightningElement {
-    iterate = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    @api sections = [];//[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
     dropContainers = [];
     currentDropContainer;

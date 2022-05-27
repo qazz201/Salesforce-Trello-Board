@@ -1,8 +1,8 @@
 <aura:component description="Board"
-                implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName">
-
+              >
+<!--  implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"-->
     <div class="">
-        <c:boardSection></c:boardSection>
-<!--        ondropelement="{!c.handleElementDrop}"-->
+        <c:boardContainer></c:boardContainer>
+        <!--        ondropelement="{!c.handleElementDrop}"-->
     </div>
 </aura:component>

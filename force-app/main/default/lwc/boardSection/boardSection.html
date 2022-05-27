@@ -2,23 +2,23 @@
 <template>
 
     <div class="slds-grid slds-gutters section-container ">
-        <template for:each={iterate} for:item="val">
+        <template for:each={sections} for:item="section" for:index="index">
 
-            <div key={val} class="slds-col section-container-column">
+            <div key={section} class="slds-col section-container-column">
                 <div data-id={getUniqueId}
                      class="slds-grid slds-grid_vertical drop-container"
                      ondragover={handleDragOver}
                      ondragend={handleDragEnd}
                      ondrop={handleDrop}>
 
-                    <h2>SECTION ID:{someUniqueId} </h2>
+                    <h2>{section}</h2>
 
                     <div class="slds-p-around_small drag-item"
                          data-id={getUniqueId}
                          draggable="true"
                          ondragstart={handleDragStart}>
 
-                        <c-board-item item-name={val}></c-board-item>
+                        <c-board-item item-name={index}></c-board-item>
 
                     </div>
                 </div>

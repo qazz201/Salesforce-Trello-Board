@@ -1,7 +1,19 @@
 import {LightningElement} from 'lwc';
+
+import getSprintTasks from '@salesforce/apex/SprintController.getSprintTasks';
+
 import {isEmpty, isNotEmpty} from 'c/commons';
 
 export default class BoardContainer extends LightningElement {
+
+    sections = [];
+
+    async connectedCallback() {
+        this.sections = await getSprintTasks();
+
+    }
+
+
     // // iterate = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
     // iterate = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     //
