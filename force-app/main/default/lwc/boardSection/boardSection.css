@@ -1,6 +1,6 @@
 .section-container {
     margin: 0;
-    height: calc(100vh - 12.5rem);
+    height: calc(100vh - 16.5rem);
     overflow: auto;
 }
 
@@ -9,10 +9,12 @@
 }
 
 .drop-container {
-    width: 18rem;
+    width: 17.9rem;
+    /*width:18rem;*/
     height: 100%;
     background: #ececec6e;
     overflow: auto;
+    border-radius: 0.6rem;
 }
 
 h2 {
@@ -29,6 +31,7 @@ h2 {
 .dragged {
     opacity: 0.7;
     transform: rotate(3deg);
+    filter: grayscale(1);
 }
 
 /*.dragged {*/
@@ -38,6 +41,10 @@ h2 {
 
 .drag-item {
     animation: drag-item-animate .3s cubic-bezier(0.3, 1.15, 0.6, 0.8);
+}
+
+.drag-item:hover {
+    cursor: move;
 }
 
 @keyframes drag-item-animate {

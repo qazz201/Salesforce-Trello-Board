@@ -1,10 +1,8 @@
-<!-- Board Section -->
 <template>
-
     <div class="slds-grid slds-gutters section-container ">
         <template for:each={sections} for:item="section" for:index="index">
 
-            <div key={section} class="slds-col section-container-column">
+            <div key={section} class="section-container-column">
                 <div data-id={getUniqueId}
                      class="slds-grid slds-grid_vertical drop-container"
                      ondragover={handleDragOver}
@@ -19,11 +17,9 @@
                          ondragstart={handleDragStart}>
 
                         <c-board-item item-name={index}></c-board-item>
-
                     </div>
                 </div>
             </div>
         </template>
     </div>
-
 </template>

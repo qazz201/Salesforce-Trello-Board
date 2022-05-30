@@ -9,14 +9,14 @@ const HORIZONTAL_SEPARATOR_TAG = 'hr';
 export default class BoardSection extends LightningElement {
     @api sections = [];//[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-    dropContainers = [];
-    currentDropContainer;
-    currentDraggedElement;
+    $dropContainers = [];
+    $currentDropContainer;
+    $currentDraggedElement;
     horizontalSeparator = document.createElement(HORIZONTAL_SEPARATOR_TAG);
     someUniqueId;
 
     renderedCallback() {
-        this.dropContainers = [...this.template.querySelectorAll('.drop-container')];
+        this.$dropContainers = [...this.template.querySelectorAll('.drop-container')];
     }
 
     get getUniqueId() {
@@ -43,26 +43,26 @@ export default class BoardSection extends LightningElement {
 
         dataTransfer.setData(DRAG_ELEMENT_ID, event.target.dataset.id);
         currentTarget.classList.add(CLASS_DRAGGED);
-        this.currentDraggedElement = currentTarget;
+        this.$currentDraggedElement = currentTarget;
     }
 
     handleDragEnd() {
-        this.removeHorizontalSeparatorInDropContainers(this.dropContainers);
+        this.removeHorizontalSeparatorInDropContainers(this.$dropContainers);
 
-        // if (this.currentDropContainer) {
-        //     this.currentDropContainer.querySelector(`.${CLASS_DRAGGED}`)?.classList.remove(CLASS_DRAGGED);
+        // if (this.$currentDropContainer) {
+        //     this.$currentDropContainer.querySelector(`.${CLASS_DRAGGED}`)?.classList.remove(CLASS_DRAGGED);
         // } else {
-        this.removeDraggedClassNameInDropContainers(this.dropContainers);
+        this.removeDraggedClassNameInDropContainers(this.$dropContainers);
         // }
     }
 
     handleDrop(event) {
         event.preventDefault();
         const {currentTarget: dropContainer, dataTransfer, clientY} = event;
-        this.currentDropContainer = dropContainer;
+        this.$currentDropContainer = dropContainer;
 
         const dropItemId = dataTransfer.getData(DRAG_ELEMENT_ID);
-        const draggedElement = this.currentDraggedElement || this.getItemById(dropItemId);
+        const draggedElement = this.$currentDraggedElement || this.getItemById(dropItemId);
 
         if (isEmpty(draggedElement)) return;
         const itemToInsertBefore = this.getItemToInsertBefore(this.getArrayDragItemsFromDropContainer(dropContainer), clientY);
