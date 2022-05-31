@@ -21,8 +21,8 @@ export default class BoardHeader extends NavigationMixin(LightningElement) {
     }
 
     handleSelect(event) {
-        console.log('SELECTED', event.detail);
-        this.selectedBoardId = event.detail;
+        this.selectedBoardId = event.detail.value;
+        this.eventDispatcher('select', {boardId: this.selectedBoardId});
     }
 
     navigateToCreateNewBoard() {
@@ -42,4 +42,7 @@ export default class BoardHeader extends NavigationMixin(LightningElement) {
         return this.template.querySelector('c-lookup');
     }
 
+    eventDispatcher(eventName = '', detail = {}) {
+        this.dispatchEvent(new CustomEvent(eventName, {detail}));
+    }
 }

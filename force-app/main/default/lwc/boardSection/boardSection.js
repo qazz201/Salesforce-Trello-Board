@@ -1,13 +1,29 @@
 import {LightningElement, api} from 'lwc';
 
-import {uniqueId, isEmpty} from 'c/commons'
+import {uniqueId, isEmpty, isNotEmpty} from 'c/commons'
 
 const DRAG_ELEMENT_ID = 'dragElementId';
 const CLASS_DRAGGED = 'dragged';
 const HORIZONTAL_SEPARATOR_TAG = 'hr';
 
 export default class BoardSection extends LightningElement {
-    @api sections = [];//[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    @api sections = [];
+
+    // @api set sections(value) {
+    //     this._sections = value;
+    //     this.sectionItems = value.reduce((aggregator, section) => {
+    //         const {sectionItems} = section;
+    //         if (isNotEmpty(sectionItems)) aggregator = [...aggregator, sectionItems];
+    //         return aggregator
+    //     }, []);
+    // }
+    //
+    // get sections() {
+    //     return this._sections;
+    // }
+    //
+    // sectionItems = [];
+    // _sections = [];
 
     $dropContainers = [];
     $currentDropContainer;

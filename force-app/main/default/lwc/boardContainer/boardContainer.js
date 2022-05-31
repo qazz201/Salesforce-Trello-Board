@@ -1,6 +1,6 @@
 import {LightningElement} from 'lwc';
 
-import getSprintTasks from '@salesforce/apex/KanbanBoardController.getSprintTasks';
+import getBoardActivities from '@salesforce/apex/KanbanBoardController.getBoardActivities';
 
 import {isEmpty, isNotEmpty} from 'c/commons';
 
@@ -9,8 +9,14 @@ export default class BoardContainer extends LightningElement {
     sections = [];
 
     async connectedCallback() {
-        this.sections =[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];//['To Do', 'In Progress']; // await getSprintTasks();
+      //  this.sections = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];//['To Do', 'In Progress']; // await getSprintTasks();
 
+    }
+
+    async handleBoardSelection(event) {
+        const {sections} = await getBoardActivities({boardId: event.detail.boardId});
+        this.sections = sections;
+        console.log(JSON.stringify(sections))
     }
 
 
