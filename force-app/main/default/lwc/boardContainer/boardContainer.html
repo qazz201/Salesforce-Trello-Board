@@ -6,7 +6,8 @@
                         onselect={handleBoardSelection}>
         </c-board-header>
         <c-board-section sections={sections}
-                         board-id={boardId}>
+                         board-id={boardId}
+                         ondropitem={handleChangeActivityType}>
         </c-board-section>
     </div>
 </template>

@@ -58,13 +58,26 @@ export default class BoardSection extends NavigationMixin(LightningElement) {
     }
 
     handleDragEnd() {
-        this.removeHorizontalSeparatorInDropContainers(this.$dropContainers);
+        try {
+            this.removeHorizontalSeparatorInDropContainers(this.$dropContainers);
 
-        // if (this.$currentDropContainer) {
-        //     this.$currentDropContainer.querySelector(`.${CLASS_DRAGGED}`)?.classList.remove(CLASS_DRAGGED);
-        // } else {
-        this.removeDraggedClassNameInDropContainers(this.$dropContainers);
-        // }
+            // if (this.$currentDropContainer) {
+            //     this.$currentDropContainer.querySelector(`.${CLASS_DRAGGED}`)?.classList.remove(CLASS_DRAGGED);
+            // } else {
+            this.removeDraggedClassNameInDropContainers(this.$dropContainers);
+            // }
+            // this.$currentDropContainer = null;
+            // this.$currentDraggedElement = null;}
+
+            this.dispatchEvent(new CustomEvent('dropitem', {
+                detail: {
+                    activityTypeId: this.$currentDropContainer?.dataset.dropContainerId,
+                    activityId: this.$currentDraggedElement?.dataset.dragItemId,
+                }
+            }))
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     handleDrop(event) {

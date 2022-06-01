@@ -2,6 +2,7 @@ import {LightningElement} from 'lwc';
 import {subscribe, unsubscribe, onError} from 'lightning/empApi';
 
 import getBoardActivities from '@salesforce/apex/KanbanBoardController.getBoardActivities';
+import updateActivityType from '@salesforce/apex/KanbanBoardController.updateActivityType';
 
 import {isEmpty, isNotEmpty} from 'c/commons';
 
@@ -42,10 +43,20 @@ export default class BoardContainer extends LightningElement {
             if (!this.boardId) return [];
             const {sections} = await getBoardActivities({boardId: this.boardId});
             this.sections = sections;
+
+            console.log('SECTIONS___',sections)
         } catch (err) {
             console.error(err);
             return []
         }
         this.$boardSection?.hideSpinner();
+    }
+
+    handleChangeActivityType(event) {
+        const {activityTypeId, activityId} = event.detail;
+        console.log('activityId', activityId);
+        console.log('activityTypeId', activityTypeId);
+
+        updateActivityType({activityTypeId, activityId});
     }
 }

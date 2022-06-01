@@ -1,17 +1,17 @@
 public with sharing class KanbanBoardController {
 
-    @AuraEnabled
-    public static List<String> getSprintTasks() {
-        Schema.DescribeFieldResult fieldResult = BoardActivityType__c.Available_Status__c.getDescribe();
-        List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
-
-        List<String> pickListValuesList = new List<String>();
-
-        for (Schema.PicklistEntry pickListVal : ple) {
-            pickListValuesList.add(pickListVal.getLabel());
-        }
-        return pickListValuesList;
-    }
+//    @AuraEnabled
+//    public static List<String> getSprintTasks() {
+//        Schema.DescribeFieldResult fieldResult = BoardActivityType__c.Available_Status__c.getDescribe();
+//        List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+//
+//        List<String> pickListValuesList = new List<String>();
+//
+//        for (Schema.PicklistEntry pickListVal : ple) {
+//            pickListValuesList.add(pickListVal.getLabel());
+//        }
+//        return pickListValuesList;
+//    }
 
     @AuraEnabled
     public static List<KanbanBoard__c>getBoards() {
@@ -26,11 +26,6 @@ public with sharing class KanbanBoardController {
 
         List<BoardSection> boardSections = new List<BoardSection>();
 
-        System.debug('boardActivityTypes '+boardActivityTypes);
-        System.debug('boardActivities '+boardActivities);
-        System.debug('boardActivityTypeIdToActivities '+boardActivityTypeIdToActivities);
-
-
         for (Id activityTypeId : boardActivityTypeIdToActivities.keySet()) {
             BoardActivityType__c boardActivityType = boardActivityTypes.get(activityTypeId);
             List<BoardSectionItem> boardSectionItems = new List<BoardSectionItem>();
@@ -43,6 +38,15 @@ public with sharing class KanbanBoardController {
         }
 
         return new Board(boardSections);
+    }
+
+    @AuraEnabled
+    public static void updateActivityType(String activityTypeId, String activityId) {
+        BoardActivity__c act = [SELECT Id, ActivityType__c FROM BoardActivity__c WHERE Id = :activityId LIMIT 1];
+        if (activityTypeId == null) return;
+
+        act.ActivityType__c = activityTypeId;
+        update act;
     }
 
     private static Map<Id, BoardActivityType__c> getBoardActivityTypes(String boardId) {
@@ -78,7 +82,7 @@ public with sharing class KanbanBoardController {
                 if (activityTypeId == activity.ActivityType__c) activities.add(activity);
             }
 
-          boardActivityTypeIdToActivities.put(activityTypeId, activities);
+            boardActivityTypeIdToActivities.put(activityTypeId, activities);
         }
 
         return boardActivityTypeIdToActivities;
