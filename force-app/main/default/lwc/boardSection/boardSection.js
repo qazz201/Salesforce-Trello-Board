@@ -1,4 +1,5 @@
 import {LightningElement, api} from 'lwc';
+import {NavigationMixin} from 'lightning/navigation';
 
 import {uniqueId, isEmpty, isNotEmpty} from 'c/commons'
 
@@ -6,30 +7,24 @@ const DRAG_ELEMENT_ID = 'dragElementId';
 const CLASS_DRAGGED = 'dragged';
 const HORIZONTAL_SEPARATOR_TAG = 'hr';
 
-export default class BoardSection extends LightningElement {
+export default class BoardSection extends NavigationMixin(LightningElement) {
     @api sections = [];
+    @api boardId = '';
 
-    // @api set sections(value) {
-    //     this._sections = value;
-    //     this.sectionItems = value.reduce((aggregator, section) => {
-    //         const {sectionItems} = section;
-    //         if (isNotEmpty(sectionItems)) aggregator = [...aggregator, sectionItems];
-    //         return aggregator
-    //     }, []);
-    // }
-    //
-    // get sections() {
-    //     return this._sections;
-    // }
-    //
-    // sectionItems = [];
-    // _sections = [];
-
+    _showSpinner = false;
     $dropContainers = [];
     $currentDropContainer;
     $currentDraggedElement;
     horizontalSeparator = document.createElement(HORIZONTAL_SEPARATOR_TAG);
     someUniqueId;
+
+    @api showSpinner() {
+        this._showSpinner = true;
+    }
+
+    @api hideSpinner() {
+        this._showSpinner = false;
+    }
 
     renderedCallback() {
         this.$dropContainers = [...this.template.querySelectorAll('.drop-container')];
@@ -84,6 +79,41 @@ export default class BoardSection extends LightningElement {
         const itemToInsertBefore = this.getItemToInsertBefore(this.getArrayDragItemsFromDropContainer(dropContainer), clientY);
 
         dropContainer.insertBefore(draggedElement, itemToInsertBefore);
+    }
+
+    handleCreateNewActivityType(event) {
+
+        console.log('Section Id: ' + this.boardId);
+
+        this[NavigationMixin.Navigate]({
+            type: 'standard__objectPage',
+            attributes: {
+                objectApiName: 'BoardActivityType__c',
+                actionName: 'new'
+            },
+            state: {
+                defaultFieldValues: `Board__c=${this.boardId}`,
+                navigationLocation: 'RELATED_LIST'
+            }
+        })
+
+    }
+
+    handleCreateNewItem(event) {
+        const sectionId = event.target.dataset.sectionId;
+        console.log('Section Id: ' + sectionId);
+
+        this[NavigationMixin.Navigate]({
+            type: 'standard__objectPage',
+            attributes: {
+                objectApiName: 'BoardActivity__c',
+                actionName: 'new'
+            },
+            state: {
+                defaultFieldValues: `ActivityType__c=${sectionId}`,
+                navigationLocation: 'RELATED_LIST'
+            }
+        });
     }
 
     getArrayDragItemsFromDropContainer(dropContainer) {

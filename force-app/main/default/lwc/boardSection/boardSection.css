@@ -2,10 +2,12 @@
     margin: 0;
     height: calc(100vh - 16.5rem);
     overflow: auto;
+    position: relative;
 }
 
 .section-container-column {
     padding: 0.3rem;
+    position: relative;
 }
 
 .drop-container {
@@ -25,7 +27,7 @@ h2 {
     background: #6315936e;
     color: white;
     font-weight: bold;
-    z-index: 999;
+    z-index: 2;
 }
 
 .dragged {
@@ -56,4 +58,17 @@ h2 {
         transform: scale(1);
         opacity: 1;
     }
+}
+
+.add-new-item-icon-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: right;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.add-new-item-icon:hover {
+    cursor: pointer;
 }

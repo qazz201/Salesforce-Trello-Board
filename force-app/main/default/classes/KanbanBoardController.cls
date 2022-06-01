@@ -20,12 +20,16 @@ public with sharing class KanbanBoardController {
 
     @AuraEnabled
     public static Board getBoardActivities(String boardId) {
-     System.debug('boardId__' + boardId);
         Map<Id, BoardActivityType__c> boardActivityTypes = getBoardActivityTypes(boardId);
         Map<Id, BoardActivity__c> boardActivities = getBoardActivitiesByType(boardActivityTypes.keySet());
         Map<Id, List<BoardActivity__c>> boardActivityTypeIdToActivities = getBoardActivityTypeToActivity(boardActivityTypes.keySet(), boardActivities.values());
 
         List<BoardSection> boardSections = new List<BoardSection>();
+
+        System.debug('boardActivityTypes '+boardActivityTypes);
+        System.debug('boardActivities '+boardActivities);
+        System.debug('boardActivityTypeIdToActivities '+boardActivityTypeIdToActivities);
+
 
         for (Id activityTypeId : boardActivityTypeIdToActivities.keySet()) {
             BoardActivityType__c boardActivityType = boardActivityTypes.get(activityTypeId);
@@ -38,7 +42,6 @@ public with sharing class KanbanBoardController {
             boardSections.add(new BoardSection(boardActivityType.id, boardActivityType.Name, boardSectionItems));
         }
 
-        System.debug('AAAAA__' + new Board(boardSections));
         return new Board(boardSections);
     }
 
@@ -75,7 +78,7 @@ public with sharing class KanbanBoardController {
                 if (activityTypeId == activity.ActivityType__c) activities.add(activity);
             }
 
-            if (!activities.isEmpty()) boardActivityTypeIdToActivities.put(activityTypeId, activities);
+          boardActivityTypeIdToActivities.put(activityTypeId, activities);
         }
 
         return boardActivityTypeIdToActivities;

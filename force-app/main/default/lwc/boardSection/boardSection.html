@@ -1,8 +1,12 @@
 <template>
     <div class="slds-grid slds-gutters section-container ">
+        <template if:true={_showSpinner}>
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </template>
+
         <template for:each={sections} for:item="section" for:index="index">
 
-            <div key={section.Id} class="section-container-column">
+            <div key={section.sectionId} class="section-container-column">
                 <div data-id={getUniqueId}
                      class="slds-grid slds-grid_vertical drop-container"
                      ondragover={handleDragOver}
@@ -17,12 +21,31 @@
                              data-id={getUniqueId}
                              draggable="true"
                              ondragstart={handleDragStart}>
+
                             <c-board-item item={sectionItem}></c-board-item>
                         </div>
                     </template>
+                </div>
 
+                <div class="add-new-item-icon-container">
+                    <lightning-icon class="add-new-item-icon"
+                                    data-section-id={section.sectionId}
+                                    icon-name="action:new"
+                                    alternative-text="Approved"
+                                    size="x-small"
+                                    title="Approved"
+                                    onclick={handleCreateNewItem}
+                    >
+                    </lightning-icon>
                 </div>
             </div>
         </template>
+        <div>
+            <lightning-button class="slds-m-left_x-small"
+                              variant="brand-outline"
+                              label="Add new list"
+                              onclick={handleCreateNewActivityType}>
+            </lightning-button>
+        </div>
     </div>
 </template>

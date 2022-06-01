@@ -2,7 +2,11 @@
 <template>
 
     <div class="slds-grid slds-grid_vertical">
-        <c-board-header class="slds-col slds-size_2-of-6 slds-align-middle slds-p-around_x-small" onselect={handleBoardSelection}></c-board-header>
-        <c-board-section sections={sections}></c-board-section>
+        <c-board-header class="slds-col slds-size_2-of-6 slds-align-middle slds-p-around_x-small"
+                        onselect={handleBoardSelection}>
+        </c-board-header>
+        <c-board-section sections={sections}
+                         board-id={boardId}>
+        </c-board-section>
     </div>
 </template>
