@@ -1,8 +1,31 @@
 <aura:component description="Board"
-              >
-<!--  implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"-->
-    <div class="">
-        <c:boardContainer></c:boardContainer>
-        <!--        ondropelement="{!c.handleElementDrop}"-->
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+                controller="KanbanBoardController"
+>
+    <!--  implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"-->
+    <!--    <div class="">-->
+    <!--        <c:boardContainer></c:boardContainer>-->
+    <!--        &lt;!&ndash;        ondropelement="{!c.handleElementDrop}"&ndash;&gt;-->
+    <!--    </div>-->
+
+    <!--    <aura:attribute name="sections" type="Array"/>-->
+
+    <aura:attribute name="boardId" type="String" default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:empApi aura:id="empApi"/>
+
+
+    <div class="slds-grid slds-grid_vertical">
+        <div class="slds-col slds-size_2-of-6 slds-align-middle slds-p-around_x-small">
+            <c:boardHeader onselect="{!c.handleBoardSelection}"></c:boardHeader>
+
+            <lightning:button class="slds-m-around_medium"
+                              variant="brand-outline"
+                              label="Create new Board"
+                              title="Create new Board"
+                              onclick="{!c.handleCreateNewBoard}"/>
+        </div>
+        <!--<c:boardSection>-->
+        {!v.body}
     </div>
 </aura:component>

@@ -1,12 +1,12 @@
 <template>
-    <div class="slds-grid slds-gutters section-container ">
+    <div class="slds-grid slds-gutters section-container">
         <template if:true={_showSpinner}>
             <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
         </template>
 
         <template for:each={sections} for:item="section" for:index="index">
 
-            <div key={section.sectionId} class="section-container-column">
+            <div key={getUniqueId} class="section-container-column">
                 <div data-id={getUniqueId}
                      data-drop-container-id={section.sectionId}
                      class="slds-grid slds-grid_vertical drop-container"
@@ -17,7 +17,7 @@
                     <h2>{section.sectionName}</h2>
 
                     <template for:each={section.sectionItems} for:item="sectionItem" for:index="index">
-                        <div key={sectionItem.id}
+                        <div key={getUniqueId}
                              class="slds-p-around_small drag-item"
                              data-drag-item-id={sectionItem.id}
                              data-id={sectionItem.id}
@@ -42,6 +42,7 @@
                 </div>
             </div>
         </template>
+
         <div>
             <lightning-button class="slds-m-left_x-small"
                               variant="brand-outline"
