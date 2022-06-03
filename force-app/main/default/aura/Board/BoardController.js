@@ -5,18 +5,15 @@
 
         empApi.subscribe(CHANNEL_NAME, -1, $A.getCallback(eventReceived => {
             console.log('Received event ', JSON.stringify(eventReceived));
+            const {KanbanBoardId__c: boardId} = eventReceived.data.payload;
+
+            if (boardId) {
+                component.set('v.boardId', boardId);
+            }
+
             helper.getRecords(component);
         }));
-
         // Need to unsubscribe from event!
-
-        // .then(subscription => {
-        //     // Subscription response received.
-        //     // We haven't received an event yet.
-        //     console.log('Subscription request sent to: ', subscription.channel);
-        //     // Save subscription to unsubscribe later
-        //     component.set('v.subscription', subscription);
-        // });
     },
 
     handleBoardSelection: function (component, event, helper) {
