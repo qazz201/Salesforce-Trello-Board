@@ -26,9 +26,19 @@
     },
 
     handleCreateNewBoard: function (component, event, helper) {
-        // const {boardId} = event.getParams();
-        // component.set('v.boardId', boardId);
-        // helper.getRecords(component);
+        event.preventDefault();
+        const navService = component.find("navService");
+        const pageReference = {
+            type: 'standard__objectPage',
+            attributes: {
+                objectApiName: 'KanbanBoard__c',
+                actionName: 'new'
+            },
+            state: {
+                navigationLocation: 'RELATED_LIST'
+            }
+        };
+        navService.navigate(pageReference);
     },
 
     handleChangeActivityType: function (component, event, helper) {

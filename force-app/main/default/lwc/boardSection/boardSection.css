@@ -1,3 +1,7 @@
+:host {
+    --drop-conttainer-width: 17.9rem;
+}
+
 .section-container {
     margin: 0;
     height: calc(100vh - 16.5rem);
@@ -10,8 +14,12 @@
     position: relative;
 }
 
+.new-drop-container {
+    min-width: var(--drop-conttainer-width);
+}
+
 .drop-container {
-    width: 17.9rem;
+    width: var(--drop-conttainer-width);
     /*width:18rem;*/
     height: 100%;
     background: #ececec6e;
