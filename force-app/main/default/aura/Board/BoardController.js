@@ -48,4 +48,41 @@
         action.setParams({activityTypeId, activityId});
         $A.enqueueAction(action);
     },
+
+    // handleShowAttachment: function (component, event, helper) {
+    //     const {activityId} = event.getParams();
+    //
+    //
+    //     const action = component.get("c.getActivityAttachments");
+    //     action.setParams({activityId});
+    //
+    //     action.setCallback(this, function (response) {
+    //         const state = response.getState();
+    //         if (state === "SUCCESS") {
+    //             const attachments = response.getReturnValue();
+    //
+    //             $A.createComponent(
+    //                 'c:modal',
+    //                 {"aura:id": "findableAuraId"},
+    //
+    //                 function (newButton, status, errorMessage) {
+    //                     if (status === 'SUCCESS') {
+    //                         const body = component.get('v.secondPanel');
+    //                         console.log(status)
+    //                         body.push(newButton);
+    //                         component.set('v.secondPanel', body);
+    //                     } else if (status === 'ERROR') {
+    //                         console.error('Error: ' + errorMessage);
+    //                     }
+    //                 }
+    //             );
+    //
+    //         } else if (state === "ERROR") {
+    //             console.error(response.getError());
+    //         }
+    //     });
+    //
+    //     $A.enqueueAction(action);
+    //
+    // }
 });

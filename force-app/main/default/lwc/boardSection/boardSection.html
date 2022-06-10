@@ -24,7 +24,10 @@
                              draggable="true"
                              ondragstart={handleDragStart}>
 
-                            <c-board-item item={sectionItem}></c-board-item>
+                            <c-board-item item={sectionItem}
+                                          onaddattachment={handleAddAttachment}
+                                          onshowattachment={handleShowAttachment}>
+                            </c-board-item>
                         </div>
                     </template>
                 </div>
@@ -36,7 +39,7 @@
                                     alternative-text="Approved"
                                     size="x-small"
                                     title="Approved"
-                                    onclick={handleCreateNewItem}
+                                    onclick={handleCreateNewActivityItem}
                     >
                     </lightning-icon>
                 </div>

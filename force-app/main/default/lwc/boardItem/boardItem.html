@@ -3,7 +3,8 @@
         <div class="slds-card__header slds-grid">
             <header class="slds-media slds-media_center slds-has-flexi-truncate">
                 <div class="slds-media__body">
-                    <h2 class="slds-card__header-title">
+                    <h2 class="slds-card__header-title"
+                        onclick={showActivityDetails}>
                         <a class="slds-truncate" title={item.name}>
                             <span>{item.name}</span>
                         </a>
@@ -12,10 +13,22 @@
             </header>
         </div>
         <div class="slds-card__body slds-card__body_inner">
-            Card Body
-            <br/>
-            Status: {item.status}
+
+            <div>
+                <p> Status: <b><em>{item.status}</em></b></p>
+                <a onclick={handleShowAttachmentModal}> Attachments: {item.attachments}</a>
+            </div>
+
+            <lightning-input type="file"
+                             label="Add Attachment"
+                             onchange={addAttachment}>
+
+            </lightning-input>
         </div>
+
+        <template if:true={showModal}>
+            <c-attachment-modal attachments={attachments} onclose={handleCloseAttachmentModal}></c-attachment-modal>
+        </template>
         <!--        <footer class="slds-card__footer">-->
         <!--            <a class="slds-card__footer-action" href="#">View All-->
         <!--                <span class="slds-assistive-text">Accounts</span>-->

@@ -1,18 +1,5 @@
 public with sharing class KanbanBoardController {
 
-//    @AuraEnabled
-//    public static List<String> getSprintTasks() {
-//        Schema.DescribeFieldResult fieldResult = BoardActivityType__c.Available_Status__c.getDescribe();
-//        List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
-//
-//        List<String> pickListValuesList = new List<String>();
-//
-//        for (Schema.PicklistEntry pickListVal : ple) {
-//            pickListValuesList.add(pickListVal.getLabel());
-//        }
-//        return pickListValuesList;
-//    }
-
     @AuraEnabled
     public static List<KanbanBoard__c>getBoards() {
         return [SELECT Id, Name FROM KanbanBoard__c];
@@ -31,13 +18,28 @@ public with sharing class KanbanBoardController {
             List<BoardSectionItem> boardSectionItems = new List<BoardSectionItem>();
 
             for (BoardActivity__c activity : boardActivityTypeIdToActivities.get(activityTypeId)) {
-                boardSectionItems.add(new BoardSectionItem(activity.Id, activity.Name, activity.Status__c));
+                boardSectionItems.add(new BoardSectionItem(activity.Id, activity.Name, activity.Status__c, activity.Attachments__c));
             }
 
             boardSections.add(new BoardSection(boardActivityType.id, boardActivityType.Name, boardSectionItems));
         }
 
         return new Board(boardSections);
+    }
+
+    @AuraEnabled
+    public static List<BoardActivityAttachment__c> getActivityAttachments(String activityId) {
+        return [
+                SELECT
+                        BoardActivity__c,
+                        DropBoxFileId__c,
+                        DropBoxFilePath__c,
+                        DropBoxFileURL__c,
+                        Id,
+                        Name
+                FROM BoardActivityAttachment__c
+                WHERE BoardActivity__c = :activityId
+        ];
     }
 
     @AuraEnabled
@@ -66,7 +68,8 @@ public with sharing class KanbanBoardController {
                         ActivityType__r.Name,
                         Id,
                         Name,
-                        Status__c
+                        Status__c,
+                        Attachments__c
                 FROM BoardActivity__c
                 WHERE ActivityType__c IN :activityTypes
         ]);
@@ -119,11 +122,14 @@ public with sharing class KanbanBoardController {
         public String name;
         @AuraEnabled
         public String status;
+        @AuraEnabled
+        public Decimal attachments;
 
-        public BoardSectionItem(Id id, String name, String status) {
+        public BoardSectionItem(Id id, String name, String status, Decimal attachments) {
             this.id = id;
             this.name = name;
             this.status = status;
+            this.attachments = attachments;
         }
     }
 }

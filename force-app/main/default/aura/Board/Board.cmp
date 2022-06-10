@@ -26,7 +26,16 @@
                               title="Create new Board"
                               onclick="{!c.handleCreateNewBoard}"/>
         </div>
+
         <!--<c:boardSection>-->
         {!v.body}
+
+<!--        <div class="wasCreatedDynamicallyInCode">-->
+<!--            Here should go the second component:-->
+<!--            <div id="addALightningComponentHere2">-->
+<!--                {!v.secondPanel}-->
+<!--            </div>-->
+<!--        </div>-->
+
     </div>
 </aura:component>

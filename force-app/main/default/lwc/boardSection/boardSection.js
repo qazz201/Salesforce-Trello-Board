@@ -105,7 +105,7 @@ export default class BoardSection extends NavigationMixin(LightningElement) {
 
     }
 
-    handleCreateNewItem(event) {
+    handleCreateNewActivityItem(event) {
         const sectionId = event.target.dataset.sectionId;
         console.log('Section Id: ' + sectionId);
 
@@ -120,6 +120,16 @@ export default class BoardSection extends NavigationMixin(LightningElement) {
                 navigationLocation: 'RELATED_LIST'
             }
         });
+    }
+
+    handleAddAttachment(event) {
+        console.log('handleAddAttachment', event, JSON.stringify(event.detail))
+        this.dispatchEvent(new CustomEvent(event.type, {detail: event.detail}));
+    }
+
+    handleShowAttachment(event) {
+        console.log('handleShowAttachment', event, JSON.stringify(event.detail))
+        this.dispatchEvent(new CustomEvent(event.type, {detail: event.detail}));
     }
 
     getArrayDragItemsFromDropContainer(dropContainer) {

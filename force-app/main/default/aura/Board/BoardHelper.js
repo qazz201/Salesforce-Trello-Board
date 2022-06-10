@@ -7,6 +7,7 @@
                 sections,
                 boardId,
                 ondropitem: component.getReference('c.handleChangeActivityType'),
+         //       onshowattachment: component.getReference('c.handleShowAttachment')
             },
             function (newButton, status, errorMessage) {
                 if (status === 'SUCCESS') {
@@ -42,4 +43,23 @@
 
         $A.enqueueAction(action);
     },
+
+    // createAttachmentModal: function (component, params, helper) {
+    //     console.log('AURA__ createAttachmentModal_', params)
+    //     $A.createComponent(
+    //         'c:modal',
+    //         {"aura:id": "findableAuraId"},
+    //
+    //         function (newButton, status, errorMessage) {
+    //             if (status === 'SUCCESS') {
+    //                 const body = component.get('v.secondPanel');
+    //                 console.log(status)
+    //                 body.push(newButton);
+    //                 component.set('v.secondPanel', body);
+    //             } else if (status === 'ERROR') {
+    //                 console.error('Error: ' + errorMessage);
+    //             }
+    //         }
+    //     );
+    // }
 });
