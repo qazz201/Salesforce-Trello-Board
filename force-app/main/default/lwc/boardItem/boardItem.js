@@ -40,7 +40,7 @@ export default class BoardItem extends NavigationMixin(LightningElement) {
                 'recordId': this.item.id
             }
             console.log(file, '__', fileData)
-            const res = await createAttachment({fileName: file.name, body: base64});
+            const res = await createAttachment({activityId: this.item.id, fileName: file.name, bodyBase64: base64});
             console.log('CREATED FILE', res);
         }
         reader.readAsDataURL(file)
