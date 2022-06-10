@@ -122,15 +122,15 @@ export default class BoardSection extends NavigationMixin(LightningElement) {
         });
     }
 
-    handleAddAttachment(event) {
-        console.log('handleAddAttachment', event, JSON.stringify(event.detail))
-        this.dispatchEvent(new CustomEvent(event.type, {detail: event.detail}));
-    }
-
-    handleShowAttachment(event) {
-        console.log('handleShowAttachment', event, JSON.stringify(event.detail))
-        this.dispatchEvent(new CustomEvent(event.type, {detail: event.detail}));
-    }
+    // handleAddAttachment(event) {
+    //     console.log('handleAddAttachment', event, JSON.stringify(event.detail))
+    //     this.dispatchEvent(new CustomEvent(event.type, {detail: event.detail}));
+    // }
+    //
+    // handleShowAttachment(event) {
+    //     console.log('handleShowAttachment', event, JSON.stringify(event.detail))
+    //     this.dispatchEvent(new CustomEvent(event.type, {detail: event.detail}));
+    // }
 
     getArrayDragItemsFromDropContainer(dropContainer) {
         if (isEmpty(dropContainer)) return;

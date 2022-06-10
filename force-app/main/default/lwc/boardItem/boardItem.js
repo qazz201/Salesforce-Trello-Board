@@ -1,4 +1,4 @@
-import {LightningElement, api} from 'lwc';
+import {LightningElement, api, track} from 'lwc';
 import {NavigationMixin} from 'lightning/navigation';
 
 import getActivityAttachments from '@salesforce/apex/KanbanBoardController.getActivityAttachments';
@@ -9,6 +9,7 @@ export default class BoardItem extends NavigationMixin(LightningElement) {
 
     attachments = [];
     showModal = false;
+    _showSpinner = false;
 
     showActivityDetails(e) {
         e.preventDefault();
@@ -18,49 +19,49 @@ export default class BoardItem extends NavigationMixin(LightningElement) {
             attributes: {
                 recordId: this.item.id,
                 actionName: 'view'
-            },
-            state: {
-                navigationLocation: 'RELATED_LIST'
             }
         });
     }
 
     addAttachment(event) {
+        try {
+            const file = event.target.files[0];
+            const reader = new FileReader();
 
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        console.log('FILEEEE__', file)
+            reader.onload = async () => {
+                this._showSpinner = true;
+                const base64 = reader.result.split(',')[1];
 
-        reader.onload = async () => {
+                const isSuccess = await createAttachment({
+                    activityId: this.item.id,
+                    fileName: file.name,
+                    bodyBase64: base64
+                });
 
-            let base64 = reader.result.split(',')[1]
-            const fileData = {
-                'filename': file.name,
-                'base64': base64,
-                'recordId': this.item.id
+                if (isSuccess) {
+                    this.item = {...this.item, attachments: this.item.attachments + 1};
+                }
+
+                this._showSpinner = false;
+                console.log('CREATED FILE isSuccess', isSuccess);
             }
-            console.log(file, '__', fileData)
-            const res = await createAttachment({activityId: this.item.id, fileName: file.name, bodyBase64: base64});
-            console.log('CREATED FILE', res);
-        }
-        reader.readAsDataURL(file)
 
-        // console.log(JSON.stringify(this.item))
-        // const res = await getActivityAttachments({activityId: this.item.id});
-        // console.log("ATTACHMENTS__", JSON.stringify(res))
-        // this.dispatchEvent(new CustomEvent('addattachment', {detail: {activityId: this.item.id}}))
+            reader.readAsDataURL(file)
+        } catch (error) {
+            console.error(error);
+            this._showSpinner = false;
+        }
     }
 
     async handleShowAttachmentModal(event) {
         event.preventDefault();
 
-        //this.dispatchEvent(new CustomEvent('showattachment', {detail: {activityId: this.item.id}}))
         this.showModal = true;
         this.attachments = await getActivityAttachments({activityId: this.item.id});
         console.log('ATTT____ ', this.attachments)
     }
 
-    handleCloseAttachmentModal(event) {
+    handleCloseAttachmentModal() {
         this.showModal = false;
     }
 }

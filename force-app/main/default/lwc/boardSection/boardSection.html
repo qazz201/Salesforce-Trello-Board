@@ -24,10 +24,7 @@
                              draggable="true"
                              ondragstart={handleDragStart}>
 
-                            <c-board-item item={sectionItem}
-                                          onaddattachment={handleAddAttachment}
-                                          onshowattachment={handleShowAttachment}>
-                            </c-board-item>
+                            <c-board-item item={sectionItem}></c-board-item>
                         </div>
                     </template>
                 </div>
@@ -52,7 +49,6 @@
                               label="Add new list"
                               onclick={handleCreateNewActivityType}>
             </lightning-button>
-
         </div>
     </div>
 </template>

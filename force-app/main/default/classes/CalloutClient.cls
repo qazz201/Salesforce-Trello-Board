@@ -77,7 +77,7 @@ public with sharing class CalloutClient {
         try {
             Integer statusCode = response.getStatusCode();
 
-            if (statusCode == 200 || statusCode == 204) {
+            if (statusCode == 200 || statusCode == 204 || statusCode == 409) {
                 System.debug('Resource updated/deleted successfully. Current method is: ' + method);
                 return response;
             } else {
