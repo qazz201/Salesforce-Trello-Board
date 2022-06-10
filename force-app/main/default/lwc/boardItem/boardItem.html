@@ -22,17 +22,18 @@
             <lightning-input type="file"
                              label="Add Attachment"
                              onchange={addAttachment}>
-
             </lightning-input>
         </div>
-
-        <template if:true={showModal}>
-            <c-attachment-modal attachments={attachments} onclose={handleCloseAttachmentModal}></c-attachment-modal>
-        </template>
         <!--        <footer class="slds-card__footer">-->
         <!--            <a class="slds-card__footer-action" href="#">View All-->
         <!--                <span class="slds-assistive-text">Accounts</span>-->
         <!--            </a>-->
         <!--        </footer>-->
     </div>
+
+    <template if:true={showModal}>
+        <c-attachment-modal attachments={attachments}
+                            onclose={handleCloseAttachmentModal}>
+        </c-attachment-modal>
+    </template>
 </template>
