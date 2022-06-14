@@ -23,10 +23,11 @@
                 <a onclick={handleShowAttachmentModal}> Attachments: {item.attachments}</a>
             </div>
 
-            <lightning-input type="file"
-                             label="Add Attachment"
-                             onchange={addAttachment}>
-            </lightning-input>
+            <c-file-uploader onuploadfile={addAttachment}></c-file-uploader>
+            <!--            <lightning-input type="file"-->
+            <!--                             label="Add Attachment"-->
+            <!--                             onchange={addAttachment}>-->
+            <!--            </lightning-input>-->
         </div>
         <!--        <footer class="slds-card__footer">-->
         <!--            <a class="slds-card__footer-action" href="#">View All-->
@@ -37,6 +38,8 @@
 
     <template if:true={showModal}>
         <c-attachment-modal attachments={attachments}
+                            activity-id={item.id}
+                            onuploadfile={addAttachmentFromModal}
                             onclose={handleCloseAttachmentModal}>
         </c-attachment-modal>
     </template>

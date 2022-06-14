@@ -1,20 +1,30 @@
 import {LightningElement, api} from 'lwc';
-import getActivityAttachments from '@salesforce/apex/KanbanBoardController.getActivityAttachments';
 
 export default class AttachmentModal extends LightningElement {
     @api attachments = [];
+    @api activityId = '';
+
+    _showSpinner = false;
+
+    @api
+    showSpinner() {
+        this._showSpinner = true;
+    }
+
+    @api
+    hideSpinner() {
+        this._showSpinner = false;
+    }
 
     handleClose() {
         this.dispatchEvent(new CustomEvent('close'))
     }
 
-    // @api
-    // async getAttachments(activityId) {
-    //     this.attachments = await getActivityAttachments({activityId});
-    //     console.log('AAAAA_A_A_A__A_A_A', this.attachments)
-    // }
+    get isEmptyAttachments() {
+        return !this.attachments.length
+    }
 
-    get isEmptyAttachments(){
-    return !this.attachments.length
+    async addAttachment(event) {
+        this.dispatchEvent(new CustomEvent(event.type, {detail: event.detail}));
     }
 }

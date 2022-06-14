@@ -9,23 +9,32 @@
                 <span class="slds-assistive-text">Cancel and close</span>
             </button>
             <div class="slds-modal__header">
-                <h1 class="slds-modal__title slds-hyphenate">Attachment</h1>
+                <h1 class="slds-modal__title slds-hyphenate">Attachments</h1>
             </div>
-            <div class="slds-modal__content slds-p-around_medium">
-                <template for:each={attachments} for:item="attachment">
 
+            <div class="slds-modal__content slds-p-around_medium modal-container__body">
+                <template if:true={_showSpinner}>
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </template>
+
+                <template for:each={attachments} for:item="attachment">
                     <p key={attachment.Id}>
                         <a href={attachment.DropBoxFileURL__c} target="_blank">{attachment.Name}</a>
                     </p>
-
                 </template>
 
                 <template if:true={isEmptyAttachments}>
                     No Attachments available
                 </template>
+
+                <div class="slds-p-top_small">
+                    <c-file-uploader onuploadfile={addAttachment}></c-file-uploader>
+                </div>
+
             </div>
+
             <div class="slds-modal__footer">
-                <button class="slds-button slds-button_brand" onclick={handleClose}>Ok</button>
+                <button class="slds-button slds-button_brand" onclick={handleClose}>Close</button>
             </div>
         </div>
     </section>

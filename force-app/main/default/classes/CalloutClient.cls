@@ -1,13 +1,3 @@
-
-//App key
-//ezsvdbw7auhblhu
-
-//App secret
-//lmo0f1r3z1740wm
-
-// access token
-// sl.BJO-W-8-bDfC2178OciKqhkZtQ72SVNp5Ba8NhHfEC5VqdQUiKDrnVFGKjD5jwdqOZH1weoj70YbgMaulc7jtXS_Yz8Rc_xAoTamyaNNs5QvAUw7cj7TUmSx578tKdC81Ats8h4
-
 public with sharing class CalloutClient {
     private String endpoint;
     private Map<String, String> headers = new Map<String, String>();

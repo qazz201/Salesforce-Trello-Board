@@ -52,7 +52,7 @@ public with sharing class DropBoxApi {
 
     private static void cloneBoardActivityAttachment(FileUploadResponse uploadResponse, String activityId) {
         BoardActivityAttachment__c boardActivityAttachment = getBoardActivityAttachmentByFilePath(uploadResponse.path_display);
-        if (boardActivityAttachment == null || boardActivityAttachment.BoardActivity__c == activityId) return;
+        if (boardActivityAttachment == null) return; //|| boardActivityAttachment.BoardActivity__c == activityId
 
         BoardActivityAttachment__c clonedAttachment = boardActivityAttachment.clone(
                 false,
