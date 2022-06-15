@@ -8,6 +8,20 @@ public with sharing class KanbanBoardSelector {
         return [SELECT Id, ActivityType__c FROM BoardActivity__c WHERE Id = :activityId LIMIT 1];
     }
 
+    public BoardActivityAttachment__c getBoardActivityAttachmentByFilePath(String filePath) {
+        return [
+                SELECT
+                        BoardActivity__c,
+                        DropBoxFileId__c,
+                        DropBoxFilePath__c,
+                        DropBoxFileURL__c,
+                        Name
+                FROM BoardActivityAttachment__c
+                WHERE DropBoxFilePath__c = :filePath
+                LIMIT 1
+        ];
+    }
+
     public Map<Id, BoardActivityType__c> getBoardActivityTypes(String boardId) {
         return new Map<Id, BoardActivityType__c>([
                 SELECT Available_Status__c,
