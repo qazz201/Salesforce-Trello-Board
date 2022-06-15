@@ -20,7 +20,9 @@
 
             <div>
                 <p> Status: <b><em>{item.status}</em></b></p>
-                <a onclick={handleShowAttachmentModal}> Attachments: {item.attachments}</a>
+                <a onclick={handleShowAttachmentModal}>
+                    Attachments: <span class={attachmentClassName}>{item.attachments}</span>
+                </a>
             </div>
 
             <c-file-uploader onuploadfile={addAttachment}></c-file-uploader>

@@ -62,4 +62,9 @@ export default class BoardItem extends NavigationMixin(LightningElement) {
     handleCloseAttachmentModal() {
         this.showModal = false;
     }
+
+    get attachmentClassName() {
+        if (this.item.attachments > 0) return 'attachment-has-count';
+        return;
+    }
 }

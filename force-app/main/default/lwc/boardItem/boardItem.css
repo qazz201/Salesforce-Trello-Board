@@ -1,0 +1,9 @@
+.attachment-has-count {
+    background: #7f8aff;
+    color: white;
+    border-radius: 50%;
+    min-width: 1.3rem;
+    text-align: center;
+    display: inline-block;
+    border-inline: 0.2rem solid #00C4FFE8;
+}
