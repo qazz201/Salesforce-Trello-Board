@@ -12,6 +12,7 @@
 
     <aura:attribute name="boardId" type="String" default=""/>
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="boardSection" type="Aura.Component[]"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
     <lightning:empApi aura:id="empApi"/>
@@ -32,15 +33,15 @@
                               onclick="{!c.handleCreateNewBoard}"/>
         </div>
 
-        <!--<c:boardSection>-->
-        {!v.body}
-
-        <!--        <div class="wasCreatedDynamicallyInCode">-->
-        <!--            Here should go the second component:-->
-        <!--            <div id="addALightningComponentHere2">-->
-        <!--                {!v.secondPanel}-->
-        <!--            </div>-->
-        <!--        </div>-->
-
+        <div>
+            {!v.boardSection}
+        </div>
     </div>
+
+    <!--        <div class="wasCreatedDynamicallyInCode">-->
+    <!--            Here should go the second component:-->
+    <!--            <div id="addALightningComponentHere2">-->
+    <!--                {!v.secondPanel}-->
+    <!--            </div>-->
+    <!--        </div>-->
 </aura:component>

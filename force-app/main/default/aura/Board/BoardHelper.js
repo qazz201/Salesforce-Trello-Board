@@ -11,10 +11,10 @@
             },
             function (newButton, status, errorMessage) {
                 if (status === 'SUCCESS') {
-                    const body = component.get('v.body');
+                    const boardSection = component.get('v.boardSection');
 
-                    body.push(newButton);
-                    component.set('v.body', body);
+                    boardSection.push(newButton);
+                    component.set('v.boardSection', boardSection);
                 } else if (status === 'ERROR') {
                     console.error('Error: ' + errorMessage);
                 }
@@ -34,7 +34,7 @@
             const state = response.getState();
             if (state === 'SUCCESS') {
                 const {sections} = response.getReturnValue();
-                component.set('v.body', []);
+                component.set('v.boardSection', []);
 
                 this.createDropdownArea(component, {sections, boardId});
             } else if (state === 'ERROR') {

@@ -1,6 +1,9 @@
 public with sharing class DropBoxApiService {
+    @TestVisible
     private static final KanbanBoardSelector kanbanBoardSelector = new KanbanBoardSelector();
+    @TestVisible
     private static final String PATH_UPLOAD_FILE = 'callout:DropBoxContent/files/upload';
+    @TestVisible
     private static final String PATH_CREATE_SHARED_LINK = 'callout:DropBoxApi/sharing/create_shared_link_with_settings';
     private static final Map<String, Object> uploadFileHeader = new Map<String, Object>{
             'mode' => 'add',
